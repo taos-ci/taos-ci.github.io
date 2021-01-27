@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<base href="../..">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>How to use lcov</title>
+
+<link rel="stylesheet" href="assets/css/custom_bootstrap.css" type="text/css">
+<link rel="stylesheet" href="assets/css/bootstrap-toc.min.css" type="text/css">
+<link rel="stylesheet" href="assets/css/frontend.css" type="text/css">
+<link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="assets/js/search/enable_search.css" type="text/css">
+
+<link rel="stylesheet" href="assets/css/extra_frontend.css" type="text/css">
+<link rel="stylesheet" href="assets/css/prism-tomorrow.css" type="text/css">
+
+<script src="assets/js/mustache.min.js"></script>
+<script src="assets/js/jquery.js"></script>
+<script src="assets/js/scrollspy.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="assets/js/typeahead.jquery.min.js"></script>
+<script src="assets/js/search.js"></script>
+<script src="assets/js/isotope.pkgd.min.js"></script>
+<script src="assets/js/compare-versions.js"></script>
+<script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="assets/js/bootstrap-toc.min.js"></script>
+<script src="assets/js/jquery.touchSwipe.min.js"></script>
+<script src="assets/js/anchor.min.js"></script>
+<script src="assets/js/tag_filtering.js"></script>
+<script src="assets/js/language_switching.js"></script>
+
+<script src="assets/js/lines_around_headings.js"></script>
+
+<script src="assets/js/trie.js"></script>
+<script src="assets/js/prism-core.js"></script>
+<script src="assets/js/prism-autoloader.js"></script>
+<script src="assets/js/prism_autoloader_path_override.js"></script>
+
+
+</head>
+
+<body class="no-script
+" data-spy="scroll" data-target="#toc" data-offset="70">
+
+<script>
+$('body').removeClass('no-script');
+</script>
+
+<nav class="navbar navbar-fixed-top navbar-default" id="topnav">
+	<div class="container-fluid">
+		<div class="navbar-right">
+			<a id="toc-toggle">
+				<span class="glyphicon glyphicon-menu-right"></span>
+				<span class="glyphicon glyphicon-menu-left"></span>
+			</a>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-wrapper" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<form class="navbar-form pull-right" id="navbar-search-form">
+                               <div class="form-group has-feedback">
+                                       <input type="text" class="form-control input-sm" name="search" id="sidenav-lookup-field" placeholder="search" disabled>
+				       <span class="glyphicon glyphicon-search form-control-feedback" id="search-mgn-glass"></span>
+                               </div>
+                        </form>
+		</div>
+		<div class="navbar-header">
+			<a id="sidenav-toggle">
+				<span class="glyphicon glyphicon-menu-right"></span>
+				<span class="glyphicon glyphicon-menu-left"></span>
+			</a>
+			<a id="home-link" href="index.html" class="hotdoc-navbar-brand">
+				<img src="assets/images/home.svg" alt="Home">
+			</a>
+		</div>
+		<div class="navbar-collapse collapse" id="navbar-wrapper">
+			<ul class="nav navbar-nav" id="menu">
+				
+<li class="dropdown">
+    <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        API References<span class="caret"></span>
+    </a>
+	<ul class="dropdown-menu" id="modules-menu">
+					<li>
+				<a href="ci/doc/hotdoc/index.html">TAOS-CI doc</a>
+			</li>
+		</ul>
+</li>
+
+<li>
+	<a href="ci/doc/hotdoc/index.html">Documents</a>
+</li>
+
+
+			</ul>
+			<div class="hidden-xs hidden-sm navbar-text navbar-center">
+							</div>
+		</div>
+	</div>
+</nav>
+
+<main>
+<div data-extension="core" data-hotdoc-in-toplevel="True" data-hotdoc-project="TAOS-CI" data-hotdoc-ref="ci/doc/how-to-use-lcov-to-generate-code-coverage-stat.html" class="page_container" id="page-wrapper">
+<script src="assets/js/utils.js"></script>
+
+<div class="panel panel-collapse oc-collapsed" id="sidenav" data-hotdoc-role="navigation">
+	<script src="assets/js/navigation.js"></script>
+	<script src="assets/js/sitemap.js"></script>
+</div>
+
+<div id="body">
+	<div id="main">
+				    <div id="page-description" data-hotdoc-role="main">
+        <h1 id="using-gcovlcov-to-generate-code-coverage-statistics">Using gcov/lcov to generate code coverage statistics</h1>
+<p>This document describes how to write a test coverage with GCOV and LCOV. LCOV is a graphical front-end
+for GCC's coverage testing tool gcov. It collects gcov data for multiple source files and creates HTML
+pages containing the source code annotated with coverage information. It also adds overview pages for
+easy navigation within the file structure. LCOV supports statement, function and branch coverage measurement.</p>
+<ul>
+<li>
+<p>HTML based output: coverage rates are additionally indicated using bar
+graphs and specific colors.</p>
+</li>
+<li>
+<p>Support for large projects: overview pages allow quick browsing of
+coverage data by providing three levels of detail: directory view,
+file view and source code view.</p>
+</li>
+</ul>
+<h1 id="getting-started">Getting started</h1>
+<p>TAOS-CI provides the automated code coverage tool by default.
+You just have to append the below statement in <code>/etc/crontab</code> file as following:</p>
+<pre><code class="language-bash">$ sudo vi /etc/crontab
+#  30 * * * * www-data /var/www/html/{YOUR_REPO_NAME}/ci/gcov/coverage-generator.sh
+</code></pre>
+<p>In order to check the generated result, please run the below statement.</p>
+<pre><code class="language-bash">$ firefox /var/www/html/{YOUR_REPO_NAME}/ci/gcov_html/index.html
+</code></pre>
+<h1 id="advanced">Advanced</h1>
+<h2 id="install-required-packages">Install required packages</h2>
+<pre><code class="language-bash">$ apt install lcov
+</code></pre>
+<h2 id="write-a-cpp-example-code">Write a cpp example code</h2>
+<pre><code class="language-bash">$ vi menu.cpp
+
+#include &lt;iostream&gt;
+using namespace std;
+
+void showChoices();
+float add(float, float);
+float subtract(float, float);
+float multiply(float, float);
+float divide(float, float);
+
+int main()
+{
+           float x, y;
+           int choice;
+           do
+           {
+                       showChoices();
+                       cin &gt;&gt; choice;
+                       switch (choice)
+                       {
+                       case 1:
+                                   cout &lt;&lt; "Enter two numbers: ";
+                                   cin &gt;&gt; x &gt;&gt; y;
+                                   cout &lt;&lt; "Sum " &lt;&lt; add(x,y) &lt;&lt;endl;
+                                   break;
+                       case 2:
+                                   cout &lt;&lt; "Enter two numbers: ";
+                                   cin &gt;&gt; x &gt;&gt; y;
+                                   cout &lt;&lt; "Difference " &lt;&lt; subtract(x,y) &lt;&lt;endl;
+                                   break;
+                       case 3:
+                                   cout &lt;&lt; "Enter two numbers: ";
+                                   cin &gt;&gt; x &gt;&gt; y;
+                                   cout &lt;&lt; "Product " &lt;&lt; multiply(x,y) &lt;&lt;endl;
+                                   break;
+                       case 4:
+                                   cout &lt;&lt; "Enter two numbers: ";
+                                   cin &gt;&gt; x &gt;&gt; y;
+                                   cout &lt;&lt; "Quotient " &lt;&lt; divide(x,y) &lt;&lt;endl;
+                                   break;
+                       case 5:
+                                   break;
+                       default:
+                                   cout &lt;&lt; "Invalid input" &lt;&lt; endl;
+                       }
+           }while (choice != 5);
+
+           return 0;
+}
+
+void showChoices()
+{
+           cout &lt;&lt; "MENU" &lt;&lt; endl;
+           cout &lt;&lt; "1: Add " &lt;&lt; endl;
+           cout &lt;&lt; "2: Subtract" &lt;&lt; endl;
+           cout &lt;&lt; "3: Multiply " &lt;&lt; endl;
+           cout &lt;&lt; "4: Divide " &lt;&lt; endl;
+           cout &lt;&lt; "5: Exit " &lt;&lt; endl;
+           cout &lt;&lt; "Enter your choice :";
+}
+
+float add(float a, float b)
+{
+           return a+b;
+}
+
+float subtract(float a, float b)
+{
+           return a-b;
+}
+
+float multiply(float a, float b)
+{
+           return a*b;
+}
+
+float divide(float a, float b)
+{
+           return a/b;
+}
+</code></pre>
+<h2 id="generate-gcno-using-coverage-option">Generate .gcno using --coverage option</h2>
+<p>The <code>–coverage</code> option here is used to compile and link code needed for coverage analysis.</p>
+<pre><code class="language-bash">$g++ -o menu.out --coverage menu.cpp
+</code></pre>
+<h2 id="declare-environment-variable">Declare environment variable</h2>
+<p>Let's change the path that .gcda files are created.
+Next we need to export two variables namely <code>GCOV_PREFIX</code> and <code>GCOV_PREFIX_STRIP</code>.
+Set <code>GCOV_PREFIX</code> to the folder you want the output files to be in.
+The <code>GCOV_PREFIX_STRIP</code> is equal to the the number of forward slashes or “/” in the path.</p>
+<pre><code class="language-bash">$export GCOV_PREFIX="/home/taos-ci/public_html/{your_repo_name}/data"
+$export GCOV_PREFIX_STRIP=5
+</code></pre>
+<h2 id="generate-gcda">Generate .gcda</h2>
+<p>You can generate .gcda file by running the example program.</p>
+<pre><code class="language-bash">$./menu.out
+
+MENU
+1: Add
+2: Subtract
+3: Multiply
+4: Divide
+5: Exit
+Enter your choice :2
+Enter two numbers: 3 4
+Difference -1
+MENU
+1: Add
+2: Subtract
+3: Multiply
+4: Divide
+5: Exit
+Enter your choice :5
+</code></pre>
+<h2 id="getting-html-output">Getting HTML output</h2>
+<p>Now, you can generate the report file with html format.</p>
+<ul>
+<li>
+<p>lcov options:</p>
+<ul>
+<li>-t: sets a test name</li>
+<li>-o: to specify the output file</li>
+<li>-c: to capture the coverage data</li>
+<li>-d: to specify the directory where the data files needs to be searched</li>
+</ul>
+</li>
+<li>
+<p>genhtml option:</p>
+<ul>
+<li>-o To specify the output folder name</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-bash">$mv *.gcno ./data/
+$cd data
+$lcov -t "Code Coverate Statistics Report" -o lcov_app.info -c -d .
+$genhtml -o html lcov_app.info
+</code></pre>
+<h2 id="run-webserver-with-python-module">Run web-server with python module</h2>
+<p>Let's run a simple web-server with the "SimpleHTTPServer" module of Python.</p>
+<pre><code class="language-bash">$cd html 
+$python -m "SimpleHTTPServer"         // To start a web-server with SimpleHTTPServer
+$firefox  http://localhost/index.html 
+$firefox  ./html/index.html           // To open the index.html directly
+</code></pre>
+<h2 id="how-to-read-the-code-coverage-stats">How to read the code coverage stats</h2>
+<ul>
+<li>http://ltp.sourceforge.net/coverage/lcov/output/index.html</li>
+</ul>
+<p>The <code>red</code> lines are the ones not executed or uncovered region.
+The <code>blue</code> lines are the ones covered. Also you can look at the Line data section
+for the number of times the lines have been executed.</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li>http://gcc.gnu.org/onlinedocs/gcc/Gcov.html</li>
+<li>http://ltp.sourceforge.net/coverage/lcov.php</li>
+</ul>
+
+    </div>
+        
+
+
+
+
+		
+	</div>
+	<div id="search_results">
+		<p>The results of the search are</p>
+	</div>
+	<div id="footer">
+		    
+
+	</div>
+</div>
+
+<div id="toc-column">
+	
+		<div class="edit-button">
+		
+
+	</div>
+		<div id="toc-wrapper">
+		<nav id="toc"></nav>
+	</div>
+</div>
+</div>
+</main>
+
+
+<script src="assets/js/navbar_offset_scroller.js"></script>
+</body>
+</html>

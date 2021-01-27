@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<base href=".">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Introduction</title>
+
+<link rel="stylesheet" href="assets/css/custom_bootstrap.css" type="text/css">
+<link rel="stylesheet" href="assets/css/bootstrap-toc.min.css" type="text/css">
+<link rel="stylesheet" href="assets/css/frontend.css" type="text/css">
+<link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="assets/js/search/enable_search.css" type="text/css">
+
+<link rel="stylesheet" href="assets/css/extra_frontend.css" type="text/css">
+<link rel="stylesheet" href="assets/css/prism-tomorrow.css" type="text/css">
+
+<script src="assets/js/mustache.min.js"></script>
+<script src="assets/js/jquery.js"></script>
+<script src="assets/js/scrollspy.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="assets/js/typeahead.jquery.min.js"></script>
+<script src="assets/js/search.js"></script>
+<script src="assets/js/isotope.pkgd.min.js"></script>
+<script src="assets/js/compare-versions.js"></script>
+<script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="assets/js/bootstrap-toc.min.js"></script>
+<script src="assets/js/jquery.touchSwipe.min.js"></script>
+<script src="assets/js/anchor.min.js"></script>
+<script src="assets/js/tag_filtering.js"></script>
+<script src="assets/js/language_switching.js"></script>
+
+<script src="assets/js/lines_around_headings.js"></script>
+
+<script src="assets/js/trie.js"></script>
+<script src="assets/js/prism-core.js"></script>
+<script src="assets/js/prism-autoloader.js"></script>
+<script src="assets/js/prism_autoloader_path_override.js"></script>
+
+
+</head>
+
+<body class="no-script
+" data-spy="scroll" data-target="#toc" data-offset="70">
+
+<script>
+$('body').removeClass('no-script');
+</script>
+
+<nav class="navbar navbar-fixed-top navbar-default" id="topnav">
+	<div class="container-fluid">
+		<div class="navbar-right">
+			<a id="toc-toggle">
+				<span class="glyphicon glyphicon-menu-right"></span>
+				<span class="glyphicon glyphicon-menu-left"></span>
+			</a>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-wrapper" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<form class="navbar-form pull-right" id="navbar-search-form">
+                               <div class="form-group has-feedback">
+                                       <input type="text" class="form-control input-sm" name="search" id="sidenav-lookup-field" placeholder="search" disabled>
+				       <span class="glyphicon glyphicon-search form-control-feedback" id="search-mgn-glass"></span>
+                               </div>
+                        </form>
+		</div>
+		<div class="navbar-header">
+			<a id="sidenav-toggle">
+				<span class="glyphicon glyphicon-menu-right"></span>
+				<span class="glyphicon glyphicon-menu-left"></span>
+			</a>
+			<a id="home-link" href="index.html" class="hotdoc-navbar-brand">
+				<img src="assets/images/home.svg" alt="Home">
+			</a>
+		</div>
+		<div class="navbar-collapse collapse" id="navbar-wrapper">
+			<ul class="nav navbar-nav" id="menu">
+				
+<li class="dropdown">
+    <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        API References<span class="caret"></span>
+    </a>
+	<ul class="dropdown-menu" id="modules-menu">
+					<li>
+				<a href="ci/doc/hotdoc/index.html">TAOS-CI doc</a>
+			</li>
+		</ul>
+</li>
+
+<li>
+	<a href="ci/doc/hotdoc/index.html">Documents</a>
+</li>
+
+
+			</ul>
+			<div class="hidden-xs hidden-sm navbar-text navbar-center">
+							</div>
+		</div>
+	</div>
+</nav>
+
+<main>
+<div data-extension="core" data-hotdoc-in-toplevel="True" data-hotdoc-project="TAOS-CI" data-hotdoc-ref="README.html" class="page_container" id="page-wrapper">
+<script src="assets/js/utils.js"></script>
+
+<div class="panel panel-collapse oc-collapsed" id="sidenav" data-hotdoc-role="navigation">
+	<script src="assets/js/navigation.js"></script>
+	<script src="assets/js/sitemap.js"></script>
+</div>
+
+<div id="body">
+	<div id="main">
+				    <div id="page-description" data-hotdoc-role="main">
+        <p><a href="LICENSE.html"><img src="https://dmlc.github.io/img/apache2.svg" alt="GitHub license" id="github-license"></a>
+<img src="https://img.shields.io/gitter/room/nnsuite/TAOS-CI" alt="Gitter" id="gitter"> <img src="https://img.shields.io/github/repo-size/nnsuite/TAOS-CI" alt="GitHub repo size" id="github-repo-size"> <img src="https://img.shields.io/github/issues/nnsuite/TAOS-CI" alt="GitHub issues" id="github-issues"> <img src="https://img.shields.io/github/issues-pr/nnsuite/TAOS-CI" alt="GitHub pull requests" id="github-pull-requests"> <img src="https://img.shields.io/github/contributors/nnsuite/TAOS-CI" alt="GitHub contributors" id="github-contributors"></p>
+<p><a href="http://nnsuite.mooo.com/TAOS-CI/ci/taos/">Build Status</a> |
+<a href="ci/doc/doxygen-documentation.html">Documentation</a> |
+<a href="ci/doc/contributing.html">Contributing</a> |
+<a href="https://gitter.im/login">Chat Room</a> |
+<a href="https://github.com/nnsuite/TAOS-CI/wiki/Release-Plan">Release Notes</a></p>
+<p><a font color="red">[Notice] On Jan-01-2021, The default branch of TAOS-CI is changed from <strong>master</strong> to <strong>main</strong>. For more details, please refer to https://github.com/nnstreamer/TAOS-CI/issues/663</a></p>
+<h1 id="introduction">Introduction</h1>
+<p>TAOS-CI is an automated project coordinator to achieve "<strong>Review less, merge faster</strong>" with a tool-based review system. It accelerates a software development based on the GitHub WebHook API. We aim to prevent a regression, find bugs, and reduce a nonproductive review process due to incorrect PRs in https://GitHub.com. Actually, submitting incorrect PRs is a PITA in case of continuous integration. Basically, PRs causing regressions will not be automatically merged. As a result, it drastically reduces the existing burdens of reviewers.</p>
+<ul>
+<li>Minimize a nonproductive review process</li>
+<li>Provide a test automation (both build and run)</li>
+<li>Prevent a performance regression</li>
+<li>Find bugs at a proper time before merging buggy codes</li>
+<li>Generate a doxygen-based developer manual</li>
+<li>Support modulable facilities with plug-in interface</li>
+<li>Integrate the existing opensource tools easily</li>
+<li>Verify an integrity of a package by supporting a platform build</li>
+<li>Support multiple operating systems as follows:
+<ul>
+<li>Ubuntu: https://www.ubuntu.com/</li>
+<li>Tizen: https://source.tizen.org/</li>
+<li>Yocto: https://www.yoctoproject.org/</li>
+<li>Android: https://source.android.org</li>
+<li>TBD &amp; TBI</li>
+</ul>
+</li>
+</ul>
+<p><img src="./image/screenshot01.png" border="0" width="350" height="250">
+<img src="./image/screenshot03.png" border="0" width="350" height="250"></p>
+<h2 id="goals">Goals</h2>
+<p>The proposed system supports a light-weight code review automation approach to support a desktop computer based servers that have out-of-date CPUs and low memory capacity. Also, if you want to enable your project specific CI facilities, it will be easily customizable for your GitHub repository because it just requires APACHE, PHP, and BASH packages. Especially, we are mainly concentrating on the following three goals among a number of action items.</p>
+<ul>
+<li>Automating tests (both build and run)</li>
+<li>Preventing Performance regression</li>
+<li>Finding potential bugs at a proper time</li>
+</ul>
+<h2 id="maintenance">Maintenance</h2>
+<p>Please refer <a href="ci/doc/maintenance.html">Here</a>.</p>
+<h2 id="publications">Publications</h2>
+<ul>
+<li>
+<p>Geunsik Lim, MyungJoo Ham, Jijoong Moon, Wook Song, Sangjung Woo, and Sewon Oh, "<strong><a href="https://ieeexplore.ieee.org/document/8662017">TAOS-CI: Lightweight &amp; Modular Continuous Integration System for Edge Computing,</a></strong>" 37th IEEE International Conference on Consumer Electronics (ICCE), Las Vegas, USA, Jan. 2019.</p>
+</li>
+<li>
+<p>Geunsik Lim, MyungJoo Ham, and Jaeyun Jung, "<strong><a href="http://www.riss.kr/link?id=A106329692">VTB: Cloud-based Testbed for On-Device AI,</a></strong>" Proc. of KIISE Korea Computer Congress, Jeju, Korea, Jun. 2019. Best Presentation Paper. (in Korean)</p>
+</li>
+<li>
+<p>Geunsik Lim, MyungJoo Ham, and Jaeyun Jung, "<strong><a href="https://doi.org/10.5626/KTCP.2020.26.1.12">VTS: Virtual Testbed System for Cloud-based On-Device AI Application,</a><a></a></strong>" KIISE Transactions on Computing Practices : Computing Practices and Letter (CPL), Jan. 2020. Invited paper. (in Korean)</p>
+</li>
+<li>
+<p>Geunsik Lim, MyungJoo Ham, Jijoong Moon, and Wook Song, "<strong><a href="https://conf.researchr.org/home/icse-2021">LightSys: Lightweight and Efficient CI System for Improving Integration Speed of Software,</a><a></a></strong>" 43rd ACM/IEEE International Conference on Software Engineering (ICSE)-SEIP, Madrid, Spain (Virtual Conference due to COVID-19), May. 2021. (<strong>Accepted</strong>)</p>
+</li>
+
+</ul>
+<br>
+<h1 id="how-to-install">How to install</h1>
+<p>Please refer to <a href="ci/doc/how-to-install-taos-ci.html">How to install TAOS-CI</a>.</p>
+<h1 id="how-to-use-new-ci-module">How to use new CI module</h1>
+<p>Please refer to <a href="ci/doc/how-to-use-taos-ci-module.html">How to use new CI module</a>.</p>
+<p>Now, available facilities are as following:</p>
+<ul>
+<li>
+<strong>Pre-build Group</strong> (before a build): File size, New line, No body, Signed-off, Clang-format, Doxygen, Timestamp, Hardcoded-path, Executable, RPM-spec, CPPcheck, Pylint, Indent, Resource checker, and so on.</li>
+<li>
+<strong>Post-build Group</strong> (after a build): Ubuntu builder, Tizen builder, Yocto builder, and Android (Coming Soon).</li>
+</ul>
+<h1 id="self-assessment">Self assessment</h1>
+<p>Note that you have to execute a self assessment before submitting your PR.
+Please refer to <a href="ci/doc/self-assessment-before-submitting-pr.html">How to build a package</a>.</p>
+<h1 id="terminology">Terminology</h1>
+<ul>
+<li>CI: Continuous Integration</li>
+<li>CD: Continuous Deployment</li>
+<li>PR: Pull Request</li>
+<li>TBD: To Be Defined</li>
+<li>TBI: To Be Implemented</li>
+</ul>
+<h1 id="license">License</h1>
+<ul>
+<li><a href="LICENSE.html">Apache License 2.0</a></li>
+</ul>
+<h1 id="reference">Reference</h1>
+<ul>
+<li>WebHook API of GitHub - https://developer.github.com/WebHooks/</li>
+<li>A painless self-hosted Git service, Gogs - https://gogs.io/</li>
+<li>Free file transfer software, Curl - https://curl.haxx.se/docs/</li>
+<li>Papers
+<ul>
+<li><a href="https://dl.acm.org/citation.cfm?id=3183525">ICSE2018, "Modern code review: a case study at google"</a></li>
+<li><a href="https://dl.acm.org/citation.cfm?id=2819015">ICSE2015, "Do Not Find Bugs: how the Current Code Review Best Practice Slows Us Down"</a></li>
+<li><a href="https://link.springer.com/chapter/10.1007/978-3-319-39225-7_8">IFIPAICT, "The Impact of a Low Level of Agreement Among Reviewers in a Code Review Process"</a></li>
+<li><a href="https://dl.acm.org/citation.cfm?id=2642986">ASE2014, "Automated Unit Test Generation for Classes with Environment Dependencies"</a></li>
+<li><a href="https://dl.acm.org/citation.cfm?id=2950305">FSE2016, "Why We Refactor? Confessions of GitHub Contributors"</a></li>
+<li><a href="https://dl.acm.org/citation.cfm?id=2950323">FSE2016, "Factors Influencing Code Review Processes in Industry"</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+        
+
+
+
+
+		<div id="subpages">
+	<p><b>Subpages:</b></p>
+	<div class="thumb-subpages">
+																																																																																																					</div>
+							<p>
+			<a href="ci/doc/how-to-setup-taos-ci-server.html">How to setup taos ci server</a>
+						</p>
+									<p>
+			<a href="ci/doc/how-to-install-taos-ci.html">How to install taos-ci</a>
+						</p>
+									<p>
+			<a href="ci/doc/how-to-unit-testing.html">How to create unit tests</a>
+						</p>
+									<p>
+			<a href="ci/doc/how-to-use-lcov-to-generate-code-coverage-stat.html">How to use lcov</a>
+						</p>
+									<p>
+			<a href="ci/doc/how-to-use-taos-ci-module.html">How to use taos-ci module</a>
+						</p>
+									<p>
+			<a href="ci/doc/self-assessment-before-submitting-pr.html">Self assessment</a>
+						</p>
+									<p>
+			<a href="ci/doc/how-to-good-commit-message.html">Good commit message</a>
+						</p>
+									<p>
+			<a href="ci/doc/how-to-build-gbs-pdebuild.html">How to build gbd and pdebuild</a>
+						</p>
+									<p>
+			<a href="ci/doc/how-to-archive-large-data.html">How to archive large data</a>
+						</p>
+									<p>
+			<a href="ci/doc/doxygen-documentation.html">doxygen documentation</a>
+						</p>
+									<p>
+			<a href="ci/doc/contributing.html">Contributing</a>
+						</p>
+									<p>
+			<a href="ci/doc/coding-convention.html">Coding convention</a>
+						</p>
+									<p>
+			<a href="ci/doc/maintenance.html">Maintenance</a>
+						</p>
+									<p>
+			<a href="CODE_OF_CONDUCT.html">Contributor Covenant Code of Conduct</a>
+						</p>
+			</div>
+	</div>
+	<div id="search_results">
+		<p>The results of the search are</p>
+	</div>
+	<div id="footer">
+		    
+
+	</div>
+</div>
+
+<div id="toc-column">
+	
+		<div class="edit-button">
+		
+
+	</div>
+		<div id="toc-wrapper">
+		<nav id="toc"></nav>
+	</div>
+</div>
+</div>
+</main>
+
+
+<script src="assets/js/navbar_offset_scroller.js"></script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<base href="../..">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Coding convention</title>
+
+<link rel="stylesheet" href="assets/css/custom_bootstrap.css" type="text/css">
+<link rel="stylesheet" href="assets/css/bootstrap-toc.min.css" type="text/css">
+<link rel="stylesheet" href="assets/css/frontend.css" type="text/css">
+<link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="assets/js/search/enable_search.css" type="text/css">
+
+<link rel="stylesheet" href="assets/css/extra_frontend.css" type="text/css">
+<link rel="stylesheet" href="assets/css/prism-tomorrow.css" type="text/css">
+
+<script src="assets/js/mustache.min.js"></script>
+<script src="assets/js/jquery.js"></script>
+<script src="assets/js/scrollspy.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="assets/js/typeahead.jquery.min.js"></script>
+<script src="assets/js/search.js"></script>
+<script src="assets/js/isotope.pkgd.min.js"></script>
+<script src="assets/js/compare-versions.js"></script>
+<script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="assets/js/bootstrap-toc.min.js"></script>
+<script src="assets/js/jquery.touchSwipe.min.js"></script>
+<script src="assets/js/anchor.min.js"></script>
+<script src="assets/js/tag_filtering.js"></script>
+<script src="assets/js/language_switching.js"></script>
+
+<script src="assets/js/lines_around_headings.js"></script>
+
+<script src="assets/js/trie.js"></script>
+<script src="assets/js/prism-core.js"></script>
+<script src="assets/js/prism-autoloader.js"></script>
+<script src="assets/js/prism_autoloader_path_override.js"></script>
+
+
+</head>
+
+<body class="no-script
+" data-spy="scroll" data-target="#toc" data-offset="70">
+
+<script>
+$('body').removeClass('no-script');
+</script>
+
+<nav class="navbar navbar-fixed-top navbar-default" id="topnav">
+	<div class="container-fluid">
+		<div class="navbar-right">
+			<a id="toc-toggle">
+				<span class="glyphicon glyphicon-menu-right"></span>
+				<span class="glyphicon glyphicon-menu-left"></span>
+			</a>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-wrapper" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<form class="navbar-form pull-right" id="navbar-search-form">
+                               <div class="form-group has-feedback">
+                                       <input type="text" class="form-control input-sm" name="search" id="sidenav-lookup-field" placeholder="search" disabled>
+				       <span class="glyphicon glyphicon-search form-control-feedback" id="search-mgn-glass"></span>
+                               </div>
+                        </form>
+		</div>
+		<div class="navbar-header">
+			<a id="sidenav-toggle">
+				<span class="glyphicon glyphicon-menu-right"></span>
+				<span class="glyphicon glyphicon-menu-left"></span>
+			</a>
+			<a id="home-link" href="index.html" class="hotdoc-navbar-brand">
+				<img src="assets/images/home.svg" alt="Home">
+			</a>
+		</div>
+		<div class="navbar-collapse collapse" id="navbar-wrapper">
+			<ul class="nav navbar-nav" id="menu">
+				
+<li class="dropdown">
+    <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        API References<span class="caret"></span>
+    </a>
+	<ul class="dropdown-menu" id="modules-menu">
+					<li>
+				<a href="ci/doc/hotdoc/index.html">TAOS-CI doc</a>
+			</li>
+		</ul>
+</li>
+
+<li>
+	<a href="ci/doc/hotdoc/index.html">Documents</a>
+</li>
+
+
+			</ul>
+			<div class="hidden-xs hidden-sm navbar-text navbar-center">
+							</div>
+		</div>
+	</div>
+</nav>
+
+<main>
+<div data-extension="core" data-hotdoc-in-toplevel="True" data-hotdoc-project="TAOS-CI" data-hotdoc-ref="ci/doc/coding-convention.html" class="page_container" id="page-wrapper">
+<script src="assets/js/utils.js"></script>
+
+<div class="panel panel-collapse oc-collapsed" id="sidenav" data-hotdoc-role="navigation">
+	<script src="assets/js/navigation.js"></script>
+	<script src="assets/js/sitemap.js"></script>
+</div>
+
+<div id="body">
+	<div id="main">
+				    <div id="page-description" data-hotdoc-role="main">
+        <h1 id="coding-convention">Coding Convention</h1>
+<p>ROS Application follows <a href="https://google.github.io/styleguide/cppguide.html">Google Style Guide</a> for coding convention.
+A few rules might be ignored depending on modules. For the full list of ignored rules, please see the following link:</p>
+<h2 id="cc">C/C++</h2>
+<p>When you push your commits, ALWAYS run clang-format &amp; cpplint to submit a commit with style change. If there is a change due to code style issues, make two separate commits: (Please do not include other codes' style change in the same commit)</p>
+<ul>
+<li>commit with style change only (i.e., commit clang-formatted original code - not your code change).</li>
+<li>commit with your code change only (i.e., contents only).</li>
+</ul>
+<h3 id="clangformat-httpsclangllvmorgdocsclangformathtml">clang-format (https://clang.llvm.org/docs/ClangFormat.html)</h3>
+<p>clang-format automatically formats your code.
+Please, refer to http://releases.llvm.org/3.9.0/tools/clang/docs/ClangFormatStyleOptions.html for more details.</p>
+<ol>
+<li>Install the latest clang-format (&gt;= 3.8)</li>
+</ol>
+<pre><code class="language-bash">$ sudo apt-cache search clang-format
+$ sudo apt-get install -y clang-format-XX.XX
+</code></pre>
+<ol start="2">
+<li>Copy clang-format file from AuDri/ROS/catkin/style/.clang-format to your caktin workspace (catkin_ws), or copy .clang-format to root path of source codes.</li>
+<li>Run clang-format with --style=File option:</li>
+</ol>
+<pre><code class="language-bash">$ clang-format-XX.XX -i --style=File [my_source_code_file]
+or 
+$ find . -name '*.h' -or -name '*.hpp' -or -name '*.cpp' | xargs clang-format-XX.XX -i -style=file $1
+</code></pre>
+<h3 id="cpplint-httpsgithubcomcpplintcpplint">cpplint (https://github.com/cpplint/cpplint)</h3>
+<p>cpplint is a static C++ style checker following Google's C++ style guide. cpplint for ROS modules is available at AuDri/ROS/catkin/style/cpplint.py.</p>
+<ol>
+<li>Directly run it with:</li>
+</ol>
+<pre><code class="language-bash">$ python cpplint.py [file_path]
+or
+$ find . -name '*.h' -or -name '*.hpp' -or -name '*.cpp' | xargs python cpplint.py $1
+</code></pre>
+<h2 id="python">Python</h2>
+<h3 id="formatter-yapf-httpsgithubcomgoogleyapf">Formatter yapf (https://github.com/google/yapf)</h3>
+<p>We use yapf as a formatter for python files.
+It changes the python files according to the defined style in ~/.config/yapf/style file.
+We use pep 8. We use style config as below. You can use yapf with PIP.</p>
+<pre><code class="language-bash">$ sudo pip install --proxy=http://10.112.1.184:8080 yapf
+$ vi ~/.config/yapf/style
+[style]
+based\_on\_style = pep8
+indent\_width = 4
+split\_before\_logical\_operator = true
+$ yapf -i *.py
+</code></pre>
+<h3 id="checker-pylint-httpswwwpylintorg">Checker pylint (https://www.pylint.org)</h3>
+<p>Pylint is a source code, bug and quality checker for the Python programming language. It follows the style recommended by PEP 8, the Python style guide.
+To check a python file with pylint:</p>
+<pre><code class="language-bash">$ sudo pip install --proxy=http://10.112.1.184:8080 pylint
+$ cd AuDri
+$ cp ROS/catkin/style/.pylintrc ~/
+$ pylint your_file.py
+Then, modify incorrect statements that are checked by pylint before submitting your PR.
+</code></pre>
+<h2 id="php">PHP</h2>
+<h3 id="php_beautifier-httpsgithubcomclbustosphp_beautifier">PHP_Beautifier (https://github.com/clbustos/PHP_Beautifier)</h3>
+<p>This program reformat and beautify PHP 4 and PHP 5 source code files automatically. It is written in PHP 5 and has a command line tool</p>
+<pre><code class="language-bash">$ sudo apt-get install php-pear
+$ sudo pear install PHP_Beautifier-0.1.15
+</code></pre>
+
+    </div>
+        
+
+
+
+
+		
+	</div>
+	<div id="search_results">
+		<p>The results of the search are</p>
+	</div>
+	<div id="footer">
+		    
+
+	</div>
+</div>
+
+<div id="toc-column">
+	
+		<div class="edit-button">
+		
+
+	</div>
+		<div id="toc-wrapper">
+		<nav id="toc"></nav>
+	</div>
+</div>
+</div>
+</main>
+
+
+<script src="assets/js/navbar_offset_scroller.js"></script>
+</body>
+</html>

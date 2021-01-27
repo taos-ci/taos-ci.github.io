@@ -1,0 +1,1 @@
+urls_downloaded_cb({"token":"www.yoctoproject.org","urls":[{"url":"README.html#page-description","node_type":"ul","context":{"gi-language":["default"]}},{"url":"ci/doc/self-assessment-before-submitting-pr.html#page-description","node_type":"ul","context":{"gi-language":["default"]}}]});

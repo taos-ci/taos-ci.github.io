@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<base href="../..">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Self assessment</title>
+
+<link rel="stylesheet" href="assets/css/custom_bootstrap.css" type="text/css">
+<link rel="stylesheet" href="assets/css/bootstrap-toc.min.css" type="text/css">
+<link rel="stylesheet" href="assets/css/frontend.css" type="text/css">
+<link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="assets/js/search/enable_search.css" type="text/css">
+
+<link rel="stylesheet" href="assets/css/extra_frontend.css" type="text/css">
+<link rel="stylesheet" href="assets/css/prism-tomorrow.css" type="text/css">
+
+<script src="assets/js/mustache.min.js"></script>
+<script src="assets/js/jquery.js"></script>
+<script src="assets/js/scrollspy.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="assets/js/typeahead.jquery.min.js"></script>
+<script src="assets/js/search.js"></script>
+<script src="assets/js/isotope.pkgd.min.js"></script>
+<script src="assets/js/compare-versions.js"></script>
+<script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="assets/js/bootstrap-toc.min.js"></script>
+<script src="assets/js/jquery.touchSwipe.min.js"></script>
+<script src="assets/js/anchor.min.js"></script>
+<script src="assets/js/tag_filtering.js"></script>
+<script src="assets/js/language_switching.js"></script>
+
+<script src="assets/js/lines_around_headings.js"></script>
+
+<script src="assets/js/trie.js"></script>
+<script src="assets/js/prism-core.js"></script>
+<script src="assets/js/prism-autoloader.js"></script>
+<script src="assets/js/prism_autoloader_path_override.js"></script>
+
+
+</head>
+
+<body class="no-script
+" data-spy="scroll" data-target="#toc" data-offset="70">
+
+<script>
+$('body').removeClass('no-script');
+</script>
+
+<nav class="navbar navbar-fixed-top navbar-default" id="topnav">
+	<div class="container-fluid">
+		<div class="navbar-right">
+			<a id="toc-toggle">
+				<span class="glyphicon glyphicon-menu-right"></span>
+				<span class="glyphicon glyphicon-menu-left"></span>
+			</a>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-wrapper" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<form class="navbar-form pull-right" id="navbar-search-form">
+                               <div class="form-group has-feedback">
+                                       <input type="text" class="form-control input-sm" name="search" id="sidenav-lookup-field" placeholder="search" disabled>
+				       <span class="glyphicon glyphicon-search form-control-feedback" id="search-mgn-glass"></span>
+                               </div>
+                        </form>
+		</div>
+		<div class="navbar-header">
+			<a id="sidenav-toggle">
+				<span class="glyphicon glyphicon-menu-right"></span>
+				<span class="glyphicon glyphicon-menu-left"></span>
+			</a>
+			<a id="home-link" href="index.html" class="hotdoc-navbar-brand">
+				<img src="assets/images/home.svg" alt="Home">
+			</a>
+		</div>
+		<div class="navbar-collapse collapse" id="navbar-wrapper">
+			<ul class="nav navbar-nav" id="menu">
+				
+<li class="dropdown">
+    <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        API References<span class="caret"></span>
+    </a>
+	<ul class="dropdown-menu" id="modules-menu">
+					<li>
+				<a href="ci/doc/hotdoc/index.html">TAOS-CI doc</a>
+			</li>
+		</ul>
+</li>
+
+<li>
+	<a href="ci/doc/hotdoc/index.html">Documents</a>
+</li>
+
+
+			</ul>
+			<div class="hidden-xs hidden-sm navbar-text navbar-center">
+							</div>
+		</div>
+	</div>
+</nav>
+
+<main>
+<div data-extension="core" data-hotdoc-in-toplevel="True" data-hotdoc-project="TAOS-CI" data-hotdoc-ref="ci/doc/self-assessment-before-submitting-pr.html" class="page_container" id="page-wrapper">
+<script src="assets/js/utils.js"></script>
+
+<div class="panel panel-collapse oc-collapsed" id="sidenav" data-hotdoc-role="navigation">
+	<script src="assets/js/navigation.js"></script>
+	<script src="assets/js/sitemap.js"></script>
+</div>
+
+<div id="body">
+	<div id="main">
+				    <div id="page-description" data-hotdoc-role="main">
+        <p>In this page, we describe how to verify if your commit(s) is valid. To do source code verification,
+we strongly recommend that you execute a clean build with a latest version of a software platform.
+Note that partial validation inspection of software cause potential defects when the software is
+integrated into the software platform.</p>
+<h1 id="how-to-build-ubuntu-deb-package-with-pdebuild">How to build <a href="https://wiki.ubuntu.com/PbuilderHowto">Ubuntu</a> DEB package with pdebuild</h1>
+<p>You have to execute <em><strong>pdebuild</strong></em> command before submitting your PR.</p>
+<pre><code class="language-bash">$ sudo apt install pbuilder debootstrap devscripts
+$ vi ~/.pbuilderrc  # In case of x86 64bit architecture
+# man 5 pbuilderrc
+DISTRIBUTION=xenial
+OTHERMIRROR="deb http://archive.ubuntu.com/ubuntu xenial universe multiverse |deb [trusted=yes] http://ppa.launchpad.net/nnstreamer/ppa/ubuntu xenial main"
+$ sudo ln -s  ~/.pbuilderrc /root/.pbuilderrc
+$ sudo pbuilder create
+$ sudo vi /etc/crontab
+#### Update pdebuild/pbuilder to keep latest apt repositories, /var/cache/pbuilder/base.tgz
+30 7 * * * root pbuilder update --override-config
+$
+$ pdebuild  # generate *.deb file with chroot technique
+$ ls -al /var/cache/pbuilder/result/*.deb
+</code></pre>
+<h1 id="how-to-build-tizen-rpm-package-with-gbs">How to build <a href="https://source.tizen.org/documentation/reference/git-build-system/usage/gbs-build">Tizen</a> RPM package with gbs</h1>
+<p>You have to execute <em><strong>gbs build</strong></em> command before submitting your PR.</p>
+<pre><code class="language-bash">$ sudo vi /etc/apt/sources.list.d/tizen.list
+deb [trusted=yes] http://download.tizen.org/tools/latest-release/Ubuntu_16.04/ / # upgraded to xenial
+$ sudo apt update
+$ sudo install gbs
+$ cp TAOS-CI/packaging/.gbs.conf ~/
+$ time gbs build -A x86_64  --clean --include-all  # Generate *.rpm from source for x86_64
+$ time gbs build -A aarch64 --clean --include-all  # Generate *.rpm from source for aarch64
+</code></pre>
+<h1 id="how-to-build-yocto-deb-package-with-devtool">How to build <a href="https://wiki.yoctoproject.org/wiki/Application_Development_with_Extensible_SDK">Yocto</a> DEB package with devtool</h1>
+<p>We assume that your work folder is /var/www/html/poky_sdk folder. Note that 'devtool' command is located in Yocto SDK folder.</p>
+<pre><code class="language-bash">$ mkdir -p /var/www/html/poky_sdk
+$ cd /var/www/html/poky_sdk
+$ wget https://downloads.yoctoproject.org/tools/support/workflow/poky-glibc-x86_64-core-image-minimal-i586-toolchain-ext-2.2.sh
+$ chmod +x ./poky-glibc-x86_64-core-image-minimal-i586-toolchain-ext-2.2.sh
+$ ./poky-glibc-x86_64-core-image-minimal-i586-toolchain-ext-2.2.sh
+$ source /var/www/html/poky_sdk/environment-setup-i586-poky-linux
+
+$ devtool add hello-world-sample https://github.com/{...}/hello-world-sample.git
+$ cd /var/www/kairos_sdk/workspace/sources/hello-world-sample/
+$ devtool edit-recipe hello-world-sample
+$ devtool build hello-world-sample
+$ devtool package hello-world-sample
+$ devtool reset hello-world-sample
+</code></pre>
+<p>The source code below is an example in case that you have to write helloYocto source code in your own github repository.
+Yocto provides three build methods to compile a source code as following:</p>
+<ul>
+<li>CMake-based hello-world project (Recommended)</li>
+</ul>
+<pre><code class="language-bash">$ cat ./CMakeLists.txt
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+PROJECT(hello-world)
+
+ADD_EXECUTABLE(hello-world helloYocto.cpp)
+INSTALL(TARGETS hello-world DESTINATION bin)
+
+$
+$ cat ./helloYocto.cpp
+#include &lt;iostream&gt;
+int main(int argc, char *argv[]){
+   std::cout &lt;&lt; "Hello World!" &lt;&lt; std::endl;
+   return 0;
+}
+</code></pre>
+<ul>
+<li>Makefile-based hello-world project</li>
+</ul>
+<pre><code class="language-bash">$ cat ./Makefile
+CC      = gcc
+CFLAGS  = -g
+RM      = rm -f
+
+default: all
+
+all: hello-world
+
+hello-world: helloYocto.c
+    $(CC) $(CFLAGS) -o hello-world helloYocto.c
+
+clean veryclean:
+    $(RM) hello-world
+
+$
+$ cat ./helloYocto.c
+#include &lt;stdio.h&gt;
+int main(int argc, char *argv[]){
+    printf("Hello world\n");
+    return 0;
+}
+</code></pre>
+<ul>
+<li>Autotool-based hello-world project
+Please refer to https://www.yoctoproject.org/docs/2.1/sdk-manual/sdk-manual.html#autotools-based-projects.</li>
+</ul>
+
+    </div>
+        
+
+
+
+
+		
+	</div>
+	<div id="search_results">
+		<p>The results of the search are</p>
+	</div>
+	<div id="footer">
+		    
+
+	</div>
+</div>
+
+<div id="toc-column">
+	
+		<div class="edit-button">
+		
+
+	</div>
+		<div id="toc-wrapper">
+		<nav id="toc"></nav>
+	</div>
+</div>
+</div>
+</main>
+
+
+<script src="assets/js/navbar_offset_scroller.js"></script>
+</body>
+</html>

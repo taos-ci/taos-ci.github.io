@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<base href="../..">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>How to setup taos ci server</title>
+
+<link rel="stylesheet" href="assets/css/custom_bootstrap.css" type="text/css">
+<link rel="stylesheet" href="assets/css/bootstrap-toc.min.css" type="text/css">
+<link rel="stylesheet" href="assets/css/frontend.css" type="text/css">
+<link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="assets/js/search/enable_search.css" type="text/css">
+
+<link rel="stylesheet" href="assets/css/extra_frontend.css" type="text/css">
+<link rel="stylesheet" href="assets/css/prism-tomorrow.css" type="text/css">
+
+<script src="assets/js/mustache.min.js"></script>
+<script src="assets/js/jquery.js"></script>
+<script src="assets/js/scrollspy.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="assets/js/typeahead.jquery.min.js"></script>
+<script src="assets/js/search.js"></script>
+<script src="assets/js/isotope.pkgd.min.js"></script>
+<script src="assets/js/compare-versions.js"></script>
+<script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="assets/js/bootstrap-toc.min.js"></script>
+<script src="assets/js/jquery.touchSwipe.min.js"></script>
+<script src="assets/js/anchor.min.js"></script>
+<script src="assets/js/tag_filtering.js"></script>
+<script src="assets/js/language_switching.js"></script>
+
+<script src="assets/js/lines_around_headings.js"></script>
+
+<script src="assets/js/trie.js"></script>
+<script src="assets/js/prism-core.js"></script>
+<script src="assets/js/prism-autoloader.js"></script>
+<script src="assets/js/prism_autoloader_path_override.js"></script>
+
+
+</head>
+
+<body class="no-script
+" data-spy="scroll" data-target="#toc" data-offset="70">
+
+<script>
+$('body').removeClass('no-script');
+</script>
+
+<nav class="navbar navbar-fixed-top navbar-default" id="topnav">
+	<div class="container-fluid">
+		<div class="navbar-right">
+			<a id="toc-toggle">
+				<span class="glyphicon glyphicon-menu-right"></span>
+				<span class="glyphicon glyphicon-menu-left"></span>
+			</a>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-wrapper" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<form class="navbar-form pull-right" id="navbar-search-form">
+                               <div class="form-group has-feedback">
+                                       <input type="text" class="form-control input-sm" name="search" id="sidenav-lookup-field" placeholder="search" disabled>
+				       <span class="glyphicon glyphicon-search form-control-feedback" id="search-mgn-glass"></span>
+                               </div>
+                        </form>
+		</div>
+		<div class="navbar-header">
+			<a id="sidenav-toggle">
+				<span class="glyphicon glyphicon-menu-right"></span>
+				<span class="glyphicon glyphicon-menu-left"></span>
+			</a>
+			<a id="home-link" href="index.html" class="hotdoc-navbar-brand">
+				<img src="assets/images/home.svg" alt="Home">
+			</a>
+		</div>
+		<div class="navbar-collapse collapse" id="navbar-wrapper">
+			<ul class="nav navbar-nav" id="menu">
+				
+<li class="dropdown">
+    <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        API References<span class="caret"></span>
+    </a>
+	<ul class="dropdown-menu" id="modules-menu">
+					<li>
+				<a href="ci/doc/hotdoc/index.html">TAOS-CI doc</a>
+			</li>
+		</ul>
+</li>
+
+<li>
+	<a href="ci/doc/hotdoc/index.html">Documents</a>
+</li>
+
+
+			</ul>
+			<div class="hidden-xs hidden-sm navbar-text navbar-center">
+							</div>
+		</div>
+	</div>
+</nav>
+
+<main>
+<div data-extension="core" data-hotdoc-in-toplevel="True" data-hotdoc-project="TAOS-CI" data-hotdoc-ref="ci/doc/how-to-setup-taos-ci-server.html" class="page_container" id="page-wrapper">
+<script src="assets/js/utils.js"></script>
+
+<div class="panel panel-collapse oc-collapsed" id="sidenav" data-hotdoc-role="navigation">
+	<script src="assets/js/navigation.js"></script>
+	<script src="assets/js/sitemap.js"></script>
+</div>
+
+<div id="body">
+	<div id="main">
+				    <div id="page-description" data-hotdoc-role="main">
+        <p>This section describes an administrator guide for TAOS-CI server.</p>
+<p>We assume that you already installed Ubuntu 16.04 x86_64 distribution in your own computer.</p>
+<h1 id="manadatory-tasks">Manadatory tasks</h1>
+<p>It means that you have to execute the mandatory tasks by default.</p>
+<h2 id="enabling-the-wwwdata-account-for-the-apache-webserver">Enabling the www-data account for the Apache webserver</h2>
+<p>First of all, let's enable www-data as a system account for debugging and setting-up the TAOS-CI solution. Please replace "/bin/no-login" with "/bin/bash". Note that you must restore "/bin/no-login" to avoid an unexpected security issue after doing all setup procedures.</p>
+<pre><code class="language-bash">$ sudo su 
+# vi /etc/passwd
+www-data:x:33:33:www-data:/var/www/html:/bin/bash
+# cd /var/www/html
+# chown -R www-data:www-data /var/www/html
+# cp /root/.bashrc /var/www/html
+# chown -R www-data:www-data  /var/www/html.bashrc
+# exit
+$
+</code></pre>
+<h2 id="prerequisites">Pre-requisites</h2>
+<ul>
+<li>For a physical machine, http://mirror.kakao.com/ubuntu-releases/xenial/</li>
+<li>For a virtual machine, https://www.osboxes.org/ubuntu/</li>
+<li>For a docker image, https://hub.docker.com/_/ubuntu/</li>
+</ul>
+<pre><code>$ cat /etc/os-release |grep VERSION_ID
+VERSION_ID="16.04.3"
+</code></pre>
+<p>In order to run all modules of TAOS-CI normally, you have to install required packages as a first step.
+Please run <strong>install-packages-base.sh</strong> that is located in the <a href="https://github.com/nnstreamer/TAOS-CI/tree/main/ci/taos/webapp">ci/taos/webapp</a> folder.</p>
+<pre><code class="language-bash">$ cd TAOS-CI
+$ sudo ./ci/taos/webapp/install-packages-base.sh
+</code></pre>
+<h2 id="setup-wwwdata-of-the-apache-webserver-for-a-sudo-privilege">Set-up www-data of the Apache webserver for a sudo privilege</h2>
+<p>You have to update <code>/etc/sudoers</code> to give <code>www-data</code> user sudo access with <strong>NOPASSWD</strong>  in order to run "git clone" command normally in Apache/PHP environment as following:</p>
+<pre><code class="language-bash">$ sudo visudo
+# Add user privilege of www-data for development step
+www-data    ALL=(ALL) NOPASSWD:ALL
+or
+# Advanced: Add user privilege of www-data for robust security
+www-data    ALL=(ALL) NOPASSWD: /usr/bin/git , NOPASSWD: /usr/bin/mount , ... Append additional commands ...
+</code></pre>
+<h2 id="how-to-enable-htaccess-to-protect-password-files-from-web-access">How to enable .htaccess to protect password files from web access</h2>
+<p>Note that you must protect configuration files that include passwords.
+Open the Apache configuration file as follows to enable <code>.htaccess</code> file for security.
+Then, restart the Apache webserver in order to put these changes into effect.</p>
+<pre><code class="language-bash">$ sudo vim /etc/apache2/apache2.conf
+------------- apache2.conf: start ----------------------------
+# First,
+AccessFileName .htaccess # &lt;--- Remove comment.
+
+# Second,
+&lt;Directory /var/www/&gt;
+     Options Indexes FollowSymLinks
+     AllowOverride None # &lt;--- Replace "None" with "All".
+     Require all granted
+&lt;/Directory&gt;
+------------- apache2.conf: end   ----------------------------
+$ sudo a2enmod rewrite
+$ sudo /etc/init.d/apache2 restart
+</code></pre>
+<p>The .htaccess file allows us to modify the rewrite rules without accessing server configuration files.
+For this reason, the .htaccess file is critical to ensure the security of your web application.</p>
+<pre><code class="language-bash">$ cd   /var/www/html/{your_prj_name}/TAOS-CI/ci/taos/config/
+$ cat ./.htaccess
+------------- .htaccess: start ----------------------------
+AuthName "Restricted area"
+AuthType Basic
+AuthUserFile /var/www/html/{your_prj_name}/TAOS-CI/ci/taos/config/.htpasswd
+&lt;Limit GET POST&gt;
+require valid-user
+&lt;/Limit&gt;
+------------- .htaccess: end   ----------------------------
+$ touch .htpasswd
+$ htpasswd -n {user_id} &gt; .htpasswd
+New password: *****
+Re-type new password: *****
+$ cat .htpasswd
+</code></pre>
+<h1 id="optional-tasks">Optional tasks</h1>
+<p>It means that you may decide the optional tasks optionally. In this case you must the enable or disable the CI modules in the configuration files to avoid unexpected errors.</p>
+<h2 id="how-to-setup-a-domain-name-address">How to set-up a domain name address</h2>
+<p>We recommend that you use your own domain name address instead of IP address for convenience and maintenance. In this case, you can receive a host name free of charge at https://freedns.afraid.org in order to use a host name such as {your_host}.mooo.com.</p>
+<pre><code class="language-bash">$ sudo vi /etc/apache2/sites-enabled/000-default.conf 
+&lt;VirtualHost *:80&gt;
+        ServerName {your_host}.mooo.com
+        ServerAdmin webmaster@localhost
+        DocumentRoot /home/taos-ci/public_html
+        # Alias /nnstreamer-link /home/taos-ci/public_html/{your_github_repo_name}/ci/taos
+        ErrorLog ${APACHE_LOG_DIR}/error.{your_github_repo_name}.log
+        CustomLog ${APACHE_LOG_DIR}/access.{your_github_repo_name}.log combined
+&lt;/VirtualHost&gt;
+$ sudo systemctl restart apache2
+</code></pre>
+<h2 id="ubuntupdebuild-setup-configuration-file">Ubuntu/pdebuild: Set-up configuration file</h2>
+<p>The pbuilderrc file contains default values used in the pbuilder program invocation.
+When pbuilder is invoked by www-data (user id of Apache webserver), <code>/etc/pbuilderrc</code> and <code>${HOME}/.pbuilderrc</code> are read.</p>
+<ul>
+<li>
+<ol>
+<li>/etc/pbuilderrc (by default): The configuration file for pbuilder, used in pdebuild.</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>/usr/share/pbuilder/pbuilderrc: The default configuration file for pbuilder, used in pdebuild.</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>${HOME}/.pbuilderrc: Configuration file for pbuilder, used in pdebuild.  It overrides /etc/pbuilderrc</li>
+</ol>
+</li>
+</ul>
+<p>It is useful to use <code>--configfile</code> option to load up a preset configuration file when switching between configuration files for different distributions.
+The file itself is sourced by a shell script, so it is required that the file conforms to shell script conventions.
+For more details, refer to http://manpages.ubuntu.com/manpages/trusty/man5/pbuilderrc.5.html</p>
+<pre><code class="language-bash">$ vi /etc/pbuilderrc
+# If you want to see more details, please run 'man 5 pbuilderrc' command.
+DISTRIBUTION=xenial
+OTHERMIRROR="deb http://archive.ubuntu.com/ubuntu xenial universe multiverse |deb [trusted=yes] http://[id]:[password]@[your-own-server]/tools/ubuntu16.04/ /"
+$
+$ chown -R www-data:www-data /var/cache/pbuilder
+$
+$ sudo vi /etc/crontab
+## Update a base Ubuntu image (e.g., /var/cache/pbuilder/base.tgz) of pdebuild/pbuilder to keep latest apt repositories as soon as possible.
+30 7 * * * root pbuilder update --override-config
+</code></pre>
+<p><strong>(Optional)</strong>: How to suppress a storage usage of /var/cache/pbuilder folder
+If the /var/cache/pbuilder folder continually increases a storage usage, we recommend that you try to use a symbolic link after attaching an storage additionally.
+For example, <code>$ sudo ln -s /{external_storage}/pbuilder /var/cache/pbuilder.</code></p>
+<p><strong>(Optional)</strong>: How to use a <code>tmpfs</code> filesystem to speed-up an execution time of pbuilder
+If you have lots of RAM more than 16 GB, the <code>tmpfs</code> based pbuilder operation can be accelerated. Please, add the below statement into the <code>/etc/fstab</code> file as folows.</p>
+<pre><code class="language-bash">$ sudo vi /etc/fstab
+tmpfs   /var/cache/pbuilder/build       tmpfs   defaults,size=2400M 0 0
+$ sudo mount /var/cache/pbuilder/build
+</code></pre>
+<h2 id="tizengbs-setup-configuration-file">Tizen/gbs: Set-up configuration file</h2>
+<p>You have to write <code>~/.gbs.conf</code> in order that the <code>www-data</code> ID of Apache webserver generates a RPM package with <code>gbs build</code> command. We assume that you are using the <code>www-data</code> as a default ID of a GitHub repository.</p>
+<pre><code class="language-bash">[general]
+#Current profile name which should match a profile section name
+profile = profile.tizen
+tmpdir = /var/tmp
+editor = vim
+packaging_branch = tizen
+workdir = .
+
+[profile.tizen]
+#Common authentication info for whole profile
+#passwd will be automatically encrypted from passwd to passwdx
+user = {your-tizen-id}
+passwd = {your-password}
+obs = obs.tizen
+
+repos = repo.extra, repo.unified, repo.base
+buildroot = ~/GBS-ROOT-SNAPSHOT/
+
+[obs.tizen]
+#OBS API URL pointing to a remote OBS.
+url = https://api.tizen.org
+
+
+[repo.base]
+url = http://download.tizen.org/snapshots/tizen/base/latest/repos/standard/packages/
+ 
+[repo.unified]
+url = http://download.tizen.org/snapshots/tizen/unified/latest/repos/standard/packages/
+
+[repo.extra]
+url = http://&lt;your_id&gt;:&lt;your_pass&gt;@&lt;your_team_server&gt;/download/latest/repos/standard/packages/
+</code></pre>
+<h2 id="yoctodevtool-setup-configuration-file">Yocto/devtool: Set-up configuration file</h2>
+<p>In case of Yocto, you can build a package with OpenEmbedded/devtool to verify a build validation on YOCTO platform
+For more details, please refer to https://wiki.yoctoproject.org/wiki/Application_Development_with_Extensible_SDK</p>
+<pre><code class="language-bash">$ sudo apt-get -y install gawk wget git-core diffstat unzip texinfo gcc-multilib
+$ sudo apt-get -y install build-essential chrpath socat libsdl1.2-dev xterm
+</code></pre>
+<p>Note that a devtool command are the configuration file (e.g.,environment-setup-i586-poky-linux) are located in the Extensible Software Development Kit (eSDK) folder. It means that you cannot install the devtool command via the apt command.</p>
+<h2 id="cron-job-to-auto-delete-folder-older-than-6-days">Cron Job to auto delete folder older than 6 days</h2>
+<p>For example, the description of crontab for deleting files older than 6 days
+under the <code>/var/www/html/&lt;your_prj_name&gt;/ci/repo-workers/pr-checker/*</code> every day at 5:30 AM is as follows.
+mtime means the last modification timestamp and the results of find may not be
+the expected files depending on the backup method. Note that too many inodes
+results in "No space left on device" issue despite available storage spaces.</p>
+<pre><code class="language-bash">$ sudo vi /etc/crontab
+30 5 * * * root find /var/www/html/{your_prj_name}/ci/repo-workers/pr-checker/* -maxdepth 2 -type d -mtime +6 -exec rm -rf {} \;
+</code></pre>
+<h2 id="how-to-speedup-a-build-time">How to speed-up a build time</h2>
+<p>we recommend that you enable a temporary filesystem (tmpfs) to improve build time and
+avoid a situation that the number of inodes exceeds that of maximum inodes.
+To monitor # of free inodes, run <code>$ sudo tune2fs -l /dev/sdax | grep Free</code> command.
+For more details about tmpfs, please refer to https://www.kernel.org/doc/Documentation/filesystems/tmpfs.txt</p>
+<pre><code class="language-bash">$ sudo mount -t tmpfs -o size=5G tmpfs  /tmp
+OR
+$ sudo vi /etc/fstab
+# /tmp was on tempfs during running CI tasks
+tmpfs      /tmp        tmpfs   defaults,size=5G    0       0
+$
+$ df | grep tmpfs
+tmpfs            5242880      2520   5240360   1% /tmp
+</code></pre>
+<h2 id="how-to-enable-swap-to-avoid-outofmemory">How to enable SWAP to avoid Out-of-Memory</h2>
+<p>In order to avoid OOM operations while running a build process, You may enable swap space with swapfile.
+Note that it does not speed up the build time.</p>
+<pre><code class="language-bash">$ cd /data
+$ sudo dd if=/dev/zero of=./swapfile-50gb bs=100M count=512
+$ sudo mkswap ./swapfile-50gb
+$ free
+$ sudo swapon ./swapfile-50gb
+$ free
+</code></pre>
+<h2 id="how-to-generate-htmlpdf-with-doxygen">How to generate HTML/PDF with Doxygen</h2>
+<p>First of all, you have to install latex packages to generate PDF file from latex as follows.</p>
+<pre><code class="language-bash">sudo apt install doxygen
+sudo apt install texlive-latex-base texlive-latex-extra
+sudo apt install latex-xcolor
+sudo apt install unoconv pdfunite pdftk
+sudo apt install libreoffice
+</code></pre>
+<p>Then, generate a single PDF file by running the below script in <strong>Documentation</strong> folder.</p>
+<pre><code class="language-bash">$ cd /var/www/html/{your_prj_name}/ci/doxybook/
+$ ./book-doxygen-publish.sh
+$ evince ./latex/book.pdf
+</code></pre>
+<p>Finally, let's generate automatically PDF book per 1 hour with cron table (e.g., /etc/crontab).</p>
+<pre><code class="language-bash">$ sudo vi /etc/crontab
+# Generate doxygen document
+20 * * * * www-data cd /var/www/html/{your_prj_name}/ ; git pull
+30 * * * * www-data /var/www/html/{your_prj_name}/ci/doxybook/book-doxygen-publish.sh
+</code></pre>
+<ul>
+<li>Note that you do not have to run <code>book-doxygen-publish.sh</code> file at the same time because the LibreOffice commands can not be executed simultaneously.</li>
+</ul>
+<h2 id="how-to-inspect-license-issue-with-scancode-toolkit">How to inspect license issue with Scancode Toolkit</h2>
+<p><a href="https://github.com/nexB/scancode-toolkit">ScanCode Toolkit</a> is a set of code scanning tools to detect the origin and license of code and dependencies.
+It uses a plug-in architecture to run a series of scan-related tools in one process flow.</p>
+<pre><code class="language-bash">sudo apt-get install python-dev bzip2 xz-utils zlib1g libxml2-dev libxslt1-dev
+cd /opt
+git clone https://github.com/nexB/scancode-toolkit.git
+sudo chown -R www-data:www-data /opt/scancode-toolkit/
+mkdir  /var/www/html/{your_prj_name}/scancode/
+/opt/scancode-toolkit/scancode  --license /var/www/html/{your_prj_name}/{src_folder}  --html-app /var/www/html/{your_prj_name}/scancode/index.html
+</code></pre>
+
+    </div>
+        
+
+
+
+
+		
+	</div>
+	<div id="search_results">
+		<p>The results of the search are</p>
+	</div>
+	<div id="footer">
+		    
+
+	</div>
+</div>
+
+<div id="toc-column">
+	
+		<div class="edit-button">
+		
+
+	</div>
+		<div id="toc-wrapper">
+		<nav id="toc"></nav>
+	</div>
+</div>
+</div>
+</main>
+
+
+<script src="assets/js/navbar_offset_scroller.js"></script>
+</body>
+</html>

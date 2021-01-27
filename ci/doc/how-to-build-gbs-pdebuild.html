@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<base href="../..">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>How to build gbd and pdebuild</title>
+
+<link rel="stylesheet" href="assets/css/custom_bootstrap.css" type="text/css">
+<link rel="stylesheet" href="assets/css/bootstrap-toc.min.css" type="text/css">
+<link rel="stylesheet" href="assets/css/frontend.css" type="text/css">
+<link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="assets/js/search/enable_search.css" type="text/css">
+
+<link rel="stylesheet" href="assets/css/extra_frontend.css" type="text/css">
+<link rel="stylesheet" href="assets/css/prism-tomorrow.css" type="text/css">
+
+<script src="assets/js/mustache.min.js"></script>
+<script src="assets/js/jquery.js"></script>
+<script src="assets/js/scrollspy.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="assets/js/typeahead.jquery.min.js"></script>
+<script src="assets/js/search.js"></script>
+<script src="assets/js/isotope.pkgd.min.js"></script>
+<script src="assets/js/compare-versions.js"></script>
+<script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="assets/js/bootstrap-toc.min.js"></script>
+<script src="assets/js/jquery.touchSwipe.min.js"></script>
+<script src="assets/js/anchor.min.js"></script>
+<script src="assets/js/tag_filtering.js"></script>
+<script src="assets/js/language_switching.js"></script>
+
+<script src="assets/js/lines_around_headings.js"></script>
+
+<script src="assets/js/trie.js"></script>
+<script src="assets/js/prism-core.js"></script>
+<script src="assets/js/prism-autoloader.js"></script>
+<script src="assets/js/prism_autoloader_path_override.js"></script>
+
+
+</head>
+
+<body class="no-script
+" data-spy="scroll" data-target="#toc" data-offset="70">
+
+<script>
+$('body').removeClass('no-script');
+</script>
+
+<nav class="navbar navbar-fixed-top navbar-default" id="topnav">
+	<div class="container-fluid">
+		<div class="navbar-right">
+			<a id="toc-toggle">
+				<span class="glyphicon glyphicon-menu-right"></span>
+				<span class="glyphicon glyphicon-menu-left"></span>
+			</a>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-wrapper" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<form class="navbar-form pull-right" id="navbar-search-form">
+                               <div class="form-group has-feedback">
+                                       <input type="text" class="form-control input-sm" name="search" id="sidenav-lookup-field" placeholder="search" disabled>
+				       <span class="glyphicon glyphicon-search form-control-feedback" id="search-mgn-glass"></span>
+                               </div>
+                        </form>
+		</div>
+		<div class="navbar-header">
+			<a id="sidenav-toggle">
+				<span class="glyphicon glyphicon-menu-right"></span>
+				<span class="glyphicon glyphicon-menu-left"></span>
+			</a>
+			<a id="home-link" href="index.html" class="hotdoc-navbar-brand">
+				<img src="assets/images/home.svg" alt="Home">
+			</a>
+		</div>
+		<div class="navbar-collapse collapse" id="navbar-wrapper">
+			<ul class="nav navbar-nav" id="menu">
+				
+<li class="dropdown">
+    <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        API References<span class="caret"></span>
+    </a>
+	<ul class="dropdown-menu" id="modules-menu">
+					<li>
+				<a href="ci/doc/hotdoc/index.html">TAOS-CI doc</a>
+			</li>
+		</ul>
+</li>
+
+<li>
+	<a href="ci/doc/hotdoc/index.html">Documents</a>
+</li>
+
+
+			</ul>
+			<div class="hidden-xs hidden-sm navbar-text navbar-center">
+							</div>
+		</div>
+	</div>
+</nav>
+
+<main>
+<div data-extension="core" data-hotdoc-in-toplevel="True" data-hotdoc-project="TAOS-CI" data-hotdoc-ref="ci/doc/how-to-build-gbs-pdebuild.html" class="page_container" id="page-wrapper">
+<script src="assets/js/utils.js"></script>
+
+<div class="panel panel-collapse oc-collapsed" id="sidenav" data-hotdoc-role="navigation">
+	<script src="assets/js/navigation.js"></script>
+	<script src="assets/js/sitemap.js"></script>
+</div>
+
+<div id="body">
+	<div id="main">
+				    <div id="page-description" data-hotdoc-role="main">
+        <h1 id="how-to-build-for-tizen-target">How to Build for Tizen Target</h1>
+<ul>
+<li><a href="ci/doc/how-to-build-gbs-pdebuild.html#build">Build with Tizen-GBS. Full, Standard</a></li>
+<li><a href="ci/doc/how-to-build-gbs-pdebuild.html#build-faster-with-caching">Build with Tizen-GBS. Cached. Faster</a></li>
+<li><a href="ci/doc/how-to-build-gbs-pdebuild.html#build-partially-a-single-ros-module-only">Build with Tizen-GBS. A Module Only, Faster</a></li>
+<li>You may combile the two "faster" methods to make it even faster.</li>
+</ul>
+<h2 id="firewall-access-accounts-official-guides">Firewall Access / Accounts / Official Guides</h2>
+<p>While we use a internal OBS build system of your company, not the public Tizen OBS system, we need firewall access to the following servers</p>
+<p>You need an OBS account if you want to access OBS (update commit ID of a package in the build system)</p>
+<ul>
+<li>Note that OBS account is only for those who updates commitID of built (for OS image) packages: project managers and maintainers.</li>
+<li>For readonly access, you may use <code>obs_viewer</code> / <code>obs_viewer</code>.</li>
+</ul>
+<p>Official Guides on Building Tizen Packages</p>
+<ul>
+<li><a href="https://source.tizen.org/documentation/developer-guide/getting-started-guide/building-packages-locally-gbs">Official Guide on 'Building Packages Locally with GBS' (source.tizen.org)</a></li>
+</ul>
+<h2 id="sample-gbsconf-for-the-tizenbased-package-project">Sample gbs.conf for the Tizen-based package Project</h2>
+<pre><code>[general]
+profile = profile.tizen
+tmpdir = /var/tmp
+editor = vim
+packaging_branch = tizen
+workdir = .
+
+[profile.tizen]
+user = TIZEN_USER_ID (optional)
+passwd = TIZENPASSWD (optional)
+obs = obs.tizen
+
+repos = repo.autodrv, repo.unified, repo.base
+buildroot = ~/GBS-ROOT/
+
+[obs.tizen]
+url = https://api.tizen.org
+user = TIZEN_USER_ID (optional)
+passwd = TIZENPASSWD (optional)
+
+[repo.base]
+url = http://download.tizen.org/snapshots/tizen/base/latest/repos/standard/packages/
+
+[repo.unified]
+url = http://download.tizen.org/snapshots/tizen/unified/latest/repos/standard/packages/
+
+[repo.autodrv]
+url = http://SPINID:SPINPASSWD@10.113.136.32/download_trbs/newlive/Tizen:/5.0:/AutoDriving/standard/
+</code></pre>
+<h2 id="install-build-infrastructure">Install build infrastructure</h2>
+<p><a href="https://source.tizen.org/documentation/developer-guide/getting-started-guide/installing-development-tools">Official Guide at tizen.org</a></p>
+<h3 id="ubuntu-1604">Ubuntu 16.04</h3>
+<ol>
+<li>Add <code>deb [trusted=yes] http://download.tizen.org/tools/latest-release/Ubuntu_16.04/ /</code> to <code>/etc/apt/sources.list</code>
+</li>
+</ol>
+<pre><code>$ sudo apt-get update
+$ sudo apt-get install gbs mic
+</code></pre>
+<h3 id="ubuntu-1404">Ubuntu 14.04</h3>
+<ol start="2">
+<li>Add <code>deb http://download.tizen.org/tools/latest-release/Ubuntu_14.04/ /</code> to <code>/etc/apt/sources.list</code>
+</li>
+</ol>
+<pre><code>$ sudo apt-get update
+$ sudo apt-get install gbs mic
+</code></pre>
+<h2 id="build">Build</h2>
+<p>CAUTION!: uncommitted files won't be included for build.</p>
+<pre><code>AuDri$ gbs build
+</code></pre>
+<p>You will see the built rpm files at ~/GBS-ROOT/local/repos/tizen/$ARCH/RPMS/
+($ARCH is x86_64 if you use x64 machine and did not supply -A option)</p>
+<p>If you want to build armv7l images:</p>
+<pre><code>AuDri$ gbs build -A armv7l
+</code></pre>
+<p>If you want to build with uncommitted files or contents:</p>
+<pre><code>AuDri$ gbs build --include-all
+</code></pre>
+<p>For more details:</p>
+<pre><code>$ man gbs
+</code></pre>
+<h2 id="build-partially-a-single-ros-module-only">Build partially (a single ROS module only)</h2>
+<pre><code>$ gbs build --define "app rqt_adlog"
+</code></pre>
+<p>will build and package rqt_adlog only (and autodrive that is required by rqt_adlog)</p>
+<h2 id="build-faster-with-caching">Build Faster with Caching</h2>
+<pre><code>$ gbs build --skip-srcrpm --ccache
+</code></pre>
+<p>If you have a large memory, you may let GBS use memory-based tmpfs to boost further.</p>
+<h2 id="analyze-unit-test-coverage">Analyze unit test coverage</h2>
+<pre><code>$ gbs build --define "testcoverage 1"
+</code></pre>
+<p>will analyze unit test coverage with gcov and lcov.</p>
+<p>With <code>testcoverage 1</code> option, there will be an additional RPM subpackage, <code>&lt;your_prj_name&gt;-unittest-coverage</code>, which installs the resulting web pages to /usr/share/&lt;your_prj_name&gt;/unittest/result/.</p>
+<p>Note that this option may be used along with --define "app APPNAME" option.</p>
+<h2 id="dive-into-the-build-system">Dive into the build system</h2>
+<pre><code>$ gbs chroot ~/GBS-ROOT/local/BUILD-ROOTS/scratch.$ARCH.0/
+info: chroot /home/mzx/GBS-ROOT/local/BUILD-ROOTS/scratch.x86_64.0
+(tizen-build-env)@HOSTNAME /]$ ls -l /
+total 84
+lrwxrwxrwx  1 root root     7 Nov 16 06:45 bin -&gt; usr/bin
+dr-xr-xr-x  2 root root  4096 Aug 25 05:29 boot
+drwxr-xr-x  4 root root  4096 Aug 25 05:29 dev
+drwxr-xr-x 21 root root  4096 Nov 16 07:36 etc
+drwxr-xr-x  3 root root  4096 Nov 16 06:45 home
+drwxr-xr-x  2 root root 20480 Nov 16 06:50 installed-pkg
+lrwxrwxrwx  1 root root     7 Nov 16 06:45 lib -&gt; usr/lib
+lrwxrwxrwx  1 root root     9 Nov 16 06:45 lib64 -&gt; usr/lib64
+lrwxrwxrwx  1 root root     9 Nov 16 06:45 media -&gt; opt/media
+drwxr-xr-x  2 root root  4096 Aug 25 05:29 mnt
+drwxr-xr-x 11 root root  4096 Nov 16 06:47 opt
+drwxr-xr-x  2 root root  4096 Nov 16 06:45 proc
+dr-xr-x---  2 root root  4096 Nov 16 06:50 root
+drwxr-xr-x  3 root root  4096 Aug 25 05:29 run
+lrwxrwxrwx  1 root root     8 Nov 16 06:45 sbin -&gt; usr/sbin
+drwxr-xr-x  2 root root  4096 Aug 25 05:29 srv
+drwxr-xr-x  2 root root  4096 Aug 25 05:29 sys
+-rw-r--r--  1 root root  6116 Nov 16 06:57 tizen.conf
+drwxrwxrwt  2 root root  4096 Nov 16 06:56 tmp
+drwxr-xr-x 15 root root  4096 Nov 16 06:45 usr
+drwxr-xr-x 14 root root  4096 Nov 16 06:45 var
+(tizen-build-env)@HOSTNAME /]$
+</code></pre>
+<h1 id="how-to-build-for-ubuntubased-target">How to Build for Ubuntu-based Target</h1>
+<h2 id="pdebuild-the-recommended-build-mechanism-for-ubuntu">pdebuild, the recommended build mechanism for Ubuntu</h2>
+<h3 id="if-you-have-already-configured-pdebuild">If you have already configured pdebuild.</h3>
+<pre><code>$ cd AuDri
+$ pdebuild
+...
+$ ls /var/cache/pbuilder/result/ -l
+-rw-r--r-- 1 mzx  mzx       1343 Nov 14 16:05 your_prj_name_2017.11.7_amd64.changes
+-rw-r--r-- 1 mzx  mzx     169934 Nov 14 16:05 your_prj_name_2017.11.7_amd64.deb
+-rw-rw-r-- 1 mzx  mzx       1060 Nov 14 16:04 your_prj_name_2017.11.7.dsc
+-rw-r--r-- 1 mzx  mzx  777126748 Nov 14 16:04 your_prj_name_2017.11.7.tar.gz
+...
+$ dpkg -i /var/cache/pbuilder/your_prj_name_2017.11.7_amd64.deb
+...
+</code></pre>
+<h3 id="how-to-configure-pdebuild">How to configure pdebuild</h3>
+<ol>
+<li>If you want to use deb files built in your local machine. (replace xenial with trusty if you want packages for Ubuntu 14.04)</li>
+</ol>
+<pre><code>$ cat ~/.pbuilderrc
+COMPONENT="main restricted universe multiverse"
+OTHERMIRROR="deb [trusted=yes] file:///var/cache/pbuilder/result ./"
+BINDMOUNTS="/var/cache/pbuilder/result"
+$ sudo pbuilder update xenial --override-config
+$ pushd /var/cache/pbuilder/result
+$ sudo -c "dpkg-scanpackages . /dev/null | gzip -9c &gt; Packages.gz"
+$ popd
+</code></pre>
+<p>Note that you need to run <code>$ sudo -c "dpkg-scanpackages . /dev/null | gzip -9c &gt; Packages.gz"</code> at pbuilder result directory whenever you've create deb files with pdebuild.</p>
+<p>For <code>sudo pbuilder</code>, use <code>xenial</code> if you want 16.04 deb packages. use <code>trusty</code> if you want 14.04 deb package.
+(You can create any Ubuntu packages regardless of the installed Ubuntu version)</p>
+<ol start="2">
+<li>If you want to use deb files available in SPIN/TRBS (Need firewall access to Seoul-RnD)</li>
+</ol>
+<pre><code>COMPONENT="main restricted universe multiverse"
+OTHERMIRROR="deb [trusted=yes] http://SPINID:SPINPASSWORD@10.113.136.32/download_trbs/newlive/Tizen:/5.0:/AutoDriving:/UbuntuTools/Ubuntu16.04/ /"
+$ sudo pbuilder update xenial --override-config
+</code></pre>
+<p>For <code>sudo pbuilder</code>, use <code>xenial</code> if you want 16.04 deb packages. use <code>trusty</code> if you want 14.04 deb package.
+For OTHERMIRROR, If you want to build <code>trusty (14.04</code>, replace 16.04 with 14.04.
+(You can create any Ubuntu packages regardless of the installed Ubuntu version)</p>
+<p>Note that you may list multiple "OTHERMIRROR" with <code>|</code>; e.g., <code>OTHERMIRROT="deb x|deb y|..."</code>.</p>
+<h2 id="debuild-if-the-components-dependency-is-not-cleaned-yet">debuild, if the component's dependency is not cleaned, yet</h2>
+<h3 id="if-you-have-your-own-public-keys-configured">If you have your own public keys configured</h3>
+<pre><code>$ debuild
+</code></pre>
+<h3 id="if-you-do-not-have-your-own-public-keys-configured">If you do not have your own public keys configured</h3>
+<pre><code>$ debuild -uc -us
+</code></pre>
+<p>The resulting .deb files will appear at <code>../</code></p>
+<h2 id="case-study-audri-project">Case study: AuDri Project</h2>
+<p>manual build, if the component is too messy for deb packaging.</p>
+<p>Developers of each component should make sure that their component is gbs buildable.
+However, for manual build, each component must be able to be built with:</p>
+<p>If you use Ubuntu14.04+ROS-Indigo (Docker-AD)</p>
+<pre><code class="language-bash">$ CIP=/opt/ros/indigo/
+</code></pre>
+<p>If you use Tizen + ROS-Kinetic (gbs chroot or target machine with Tizen)</p>
+<pre><code class="language-bash">$ CIP=/usr/lib/ros/kinetic/
+</code></pre>
+<pre><code class="language-bash">AuDri$ . ${CIP}setup.sh
+AuDri$ cd ROS/component_name
+AuDri/ROS/component_name$ rm -Rf build
+AuDri/ROS/component_name$ mkdir build
+AuDri/ROS/component_name$ cd build
+AuDri/ROS/component_name/build$ cd build
+AuDri/ROS/component_name/build$ cmake .. -DCMAKE_INSTALL_PREFIX=${CIP}
+AuDri/ROS/component_name/build$ make -j8
+</code></pre>
+<p>Then, you can install by:</p>
+<pre><code class="language-bash">AuDri/ROS/component_name/build$ sudo sh -c ". ${CIP}setup.sh; make install"
+</code></pre>
+<p>Here is a shell script I'm using for Ubuntu 14.04 Docker-AD (ROS Indigo):</p>
+<pre><code class="language-bash">$ cd AuDri/ROS
+$ cat run.sh
+. /opt/ros/indigo/setup.sh
+pushd $1
+echo $1
+rm -Rf build
+mkdir -p build
+pushd build
+cmake .. -DCMAKE_INSTALL_PREFIX=/opt/ros/indigo
+make -j8
+sudo sh -c ". /opt/ros/indigo/setup.sh; make install"
+popd
+popd
+</code></pre>
+
+    </div>
+        
+
+
+
+
+		
+	</div>
+	<div id="search_results">
+		<p>The results of the search are</p>
+	</div>
+	<div id="footer">
+		    
+
+	</div>
+</div>
+
+<div id="toc-column">
+	
+		<div class="edit-button">
+		
+
+	</div>
+		<div id="toc-wrapper">
+		<nav id="toc"></nav>
+	</div>
+</div>
+</div>
+</main>
+
+
+<script src="assets/js/navbar_offset_scroller.js"></script>
+</body>
+</html>

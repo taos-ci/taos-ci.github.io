@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<base href="../..">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>How to install taos-ci</title>
+
+<link rel="stylesheet" href="assets/css/custom_bootstrap.css" type="text/css">
+<link rel="stylesheet" href="assets/css/bootstrap-toc.min.css" type="text/css">
+<link rel="stylesheet" href="assets/css/frontend.css" type="text/css">
+<link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="assets/js/search/enable_search.css" type="text/css">
+
+<link rel="stylesheet" href="assets/css/extra_frontend.css" type="text/css">
+<link rel="stylesheet" href="assets/css/prism-tomorrow.css" type="text/css">
+
+<script src="assets/js/mustache.min.js"></script>
+<script src="assets/js/jquery.js"></script>
+<script src="assets/js/scrollspy.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="assets/js/typeahead.jquery.min.js"></script>
+<script src="assets/js/search.js"></script>
+<script src="assets/js/isotope.pkgd.min.js"></script>
+<script src="assets/js/compare-versions.js"></script>
+<script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="assets/js/bootstrap-toc.min.js"></script>
+<script src="assets/js/jquery.touchSwipe.min.js"></script>
+<script src="assets/js/anchor.min.js"></script>
+<script src="assets/js/tag_filtering.js"></script>
+<script src="assets/js/language_switching.js"></script>
+
+<script src="assets/js/lines_around_headings.js"></script>
+
+<script src="assets/js/trie.js"></script>
+<script src="assets/js/prism-core.js"></script>
+<script src="assets/js/prism-autoloader.js"></script>
+<script src="assets/js/prism_autoloader_path_override.js"></script>
+
+
+</head>
+
+<body class="no-script
+" data-spy="scroll" data-target="#toc" data-offset="70">
+
+<script>
+$('body').removeClass('no-script');
+</script>
+
+<nav class="navbar navbar-fixed-top navbar-default" id="topnav">
+	<div class="container-fluid">
+		<div class="navbar-right">
+			<a id="toc-toggle">
+				<span class="glyphicon glyphicon-menu-right"></span>
+				<span class="glyphicon glyphicon-menu-left"></span>
+			</a>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-wrapper" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<form class="navbar-form pull-right" id="navbar-search-form">
+                               <div class="form-group has-feedback">
+                                       <input type="text" class="form-control input-sm" name="search" id="sidenav-lookup-field" placeholder="search" disabled>
+				       <span class="glyphicon glyphicon-search form-control-feedback" id="search-mgn-glass"></span>
+                               </div>
+                        </form>
+		</div>
+		<div class="navbar-header">
+			<a id="sidenav-toggle">
+				<span class="glyphicon glyphicon-menu-right"></span>
+				<span class="glyphicon glyphicon-menu-left"></span>
+			</a>
+			<a id="home-link" href="index.html" class="hotdoc-navbar-brand">
+				<img src="assets/images/home.svg" alt="Home">
+			</a>
+		</div>
+		<div class="navbar-collapse collapse" id="navbar-wrapper">
+			<ul class="nav navbar-nav" id="menu">
+				
+<li class="dropdown">
+    <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        API References<span class="caret"></span>
+    </a>
+	<ul class="dropdown-menu" id="modules-menu">
+					<li>
+				<a href="ci/doc/hotdoc/index.html">TAOS-CI doc</a>
+			</li>
+		</ul>
+</li>
+
+<li>
+	<a href="ci/doc/hotdoc/index.html">Documents</a>
+</li>
+
+
+			</ul>
+			<div class="hidden-xs hidden-sm navbar-text navbar-center">
+							</div>
+		</div>
+	</div>
+</nav>
+
+<main>
+<div data-extension="core" data-hotdoc-in-toplevel="True" data-hotdoc-project="TAOS-CI" data-hotdoc-ref="ci/doc/how-to-install-taos-ci.html" class="page_container" id="page-wrapper">
+<script src="assets/js/utils.js"></script>
+
+<div class="panel panel-collapse oc-collapsed" id="sidenav" data-hotdoc-role="navigation">
+	<script src="assets/js/navigation.js"></script>
+	<script src="assets/js/sitemap.js"></script>
+</div>
+
+<div id="body">
+	<div id="main">
+				    <div id="page-description" data-hotdoc-role="main">
+        <h1 id="step-1-setup-the-ci-server">Step 1: Set-up the CI server</h1>
+<p>We explain how to set-up your own CI server on Ubuntu 16.04 x86_64 (Recommended) even though TAOS-CI is completely compatible with most of the Linux distributions. Please refer to a set-up guide of a CI server to install required packages.</p>
+<ul>
+<li><a href="ci/doc/how-to-setup-taos-ci-server.html">Setting up a CI server</a></li>
+</ul>
+<h1 id="step-2-how-to-install-taosci-system">Step 2: How to install TAOS-CI system</h1>
+<ul>
+<li>PHP: a widely-used general-purpose scripting language can be embedded into HTML.</li>
+<li>Bash: sh-compatible command language interpreter that can be configured to be POSIX-conformant by default.</li>
+<li>Curl: tool to transfer data to a CI server using the supported protocol such as HTTP/HTTPS.</li>
+</ul>
+<p>Then, please press 'Watch', 'Star', and 'Fork' on the top right to monitor latest feature changes of TAOS-CI repository. Next, please modify the configuration files for your CI server.</p>
+<pre><code class="language-bash">$ cd /var/www/html/
+$ git clone https://github.com/{your_github_account}/{your_prj_name}.git
+$ cd {your_prj_name}
+$ git submodule add https://github.com/nnstreamer/TAOS-CI.git
+$ ln -s ./TAOS-CI/ci ./ci
+$ vi ./ci/taos/config/config-server-administrator.sh
+$ vi ./ci/taos/config/config-webhook.json
+$ vi ./ci/taos/config/config-environment.sh
+$ vi ./ci/taos/config/config-plugins-prebuild.sh
+$ vi ./ci/taos/config/config-plugins-postbuild.sh
+</code></pre>
+<p>That's all. Enjoy TAOS-CI after setting-up a webhook API of github.</p>
+<h1 id="step-3-how-to-setup-with-a-github-webhook-api">Step 3: How to set-up with a GitHub webhook API</h1>
+<p>A webhook handler of TAOS-CI receives an event message from a github repository, in order to inspect pull requests that are submitted by contributors.</p>
+<pre><code class="language-bash">$ firefox https://github.com/{your_github_account}/{your_prj_name}/settings
+</code></pre>
+<p>Press the <strong>Hooks</strong> menu - Press the <strong>Add webhook</strong> button. Note that you have to ask a firewall manager to get a network access such as 80 and 443 port between your own CI server and a github server if your company is running a firewall system.</p>
+<pre><code class="language-bash">* Webhooks/ Add webhook
+  - Payload URL:
+    http://{your_hostname}.mooo.com/{your_prj_name}/ci/taos/webhook.php
+  - Content type: application/x-www-form-urlencoded
+  - Secret: ******
+  - Which events would you like to trigger this webhook?
+    [ ] Just the push event.
+    [ ] Send me everything.
+    [x] Let me select individual events.
+      [v] Issues
+      [v] Issue comment
+      [v] Pull request
+  - [v] Active
+We will deliver event details when this hook is triggered. 
+</code></pre>
+<p>As a final step, press <code>Add webhook</code> button. That's all.
+From now on, enjoy a CI world for more collaborative and productive software development!!!</p>
+
+    </div>
+        
+
+
+
+
+		
+	</div>
+	<div id="search_results">
+		<p>The results of the search are</p>
+	</div>
+	<div id="footer">
+		    
+
+	</div>
+</div>
+
+<div id="toc-column">
+	
+		<div class="edit-button">
+		
+
+	</div>
+		<div id="toc-wrapper">
+		<nav id="toc"></nav>
+	</div>
+</div>
+</div>
+</main>
+
+
+<script src="assets/js/navbar_offset_scroller.js"></script>
+</body>
+</html>
